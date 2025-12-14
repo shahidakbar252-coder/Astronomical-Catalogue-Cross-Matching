@@ -1,15 +1,18 @@
 # Astronomical Catalogue Cross-Matching
 
 ## Overview
-This project implements an automated algorithm to align multiple astronomical catalogues derived from consecutive optical telescope observations of the same sky patch. Due to mechanical inaccuracies in telescope pointing, sequential images often exhibit spatial shifts that must be corrected for multi-epoch analysis.
+This project addresses the problem of precisely aligning multiple astronomical catalogues (lists of star coordinates) derived from consecutive optical telescope exposures of the same sky patch. Since telescope pointing is subject to errors, a computational approach is necessary to determine the correct spatial shift between images for accurate multi-epoch analysis.
 
-## Key Features & Methodology:
-* **Data Parsing:** extracts $(x, y)$ source coordinates from raw ASCII catalogue files (image*.asc).
-* **Shift Detection:** Calculates pairwise relative shifts between images by computing the distance vectors between all sources in two catalogues. A 2D histogram of these difference vectors is used to identify the peak, which corresponds to the true physical shift between the exposures.
-* **Global Alignment:** Solves a system of linear relationships derived from the pairwise shifts to determine the absolute offset of each image relative to a reference frame.
-* **Visualization:** Verifies the alignment by plotting the cross-matched sources, ensuring that stars from different exposures overlap correctly.
+## Methodology and Key Features
+1.  **Shift Detection (Pairwise Alignment):**
+    * The core algorithm calculates the relative $(x, y)$ shift between two catalogues by taking the difference between all possible pairs of object coordinates (one from each catalogue).
+    * A 2D histogram of these difference vectors is created; the true offset is identified as the center of the bin containing the maximum number of counts, as it represents the most frequent positional difference between corresponding stars. This technique is robust against measurement errors and non-matching sources (e.g., artifacts or missing objects).
+2.  **Global Alignment:**
+    * Pairwise shifts are computed for all combinations of the six available catalogues.
+    * A system of linear equations is then solved to find the final absolute shift of each catalogue relative to a fixed reference image.
+3.  **Analysis:** The project includes an analysis of systematic errors, noting that shifts computed directly between images (e.g., $d_{23}$) may differ slightly from shifts computed indirectly ($d_{21}-d_{31}$) due to accumulation of binning/measurement noise.
 
-## Tools: 
-* **Python**
-* **NumPy** (vectorized calculations)
-* **Matplotlib** (visualization)
+## Tools Used
+* **Python:**
+* **NumPy:** Essential for efficient, vectorized calculation of all pairwise coordinate differences and for manipulating data arrays.
+* **Matplotlib:** Used for visualizing the 2D difference histograms and plotting the final shifts of all catalogues.
