@@ -9,7 +9,7 @@ This project implements an automated algorithm to align multiple astronomical ca
 * **Global Alignment:** Solves a system of linear relationships derived from the pairwise shifts to determine the absolute offset of each image relative to a reference frame.
 * **Visualization:** Verifies the alignment by plotting the cross-matched sources, ensuring that stars from different exposures overlap correctly.
 
-## Technologies: 
+## Tools: 
 * **Python**
 * **NumPy** (vectorized calculations)
 * **Matplotlib** (visualization)
